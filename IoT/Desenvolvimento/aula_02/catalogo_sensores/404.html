@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Ops...</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            overflow: hidden;
+            background: radial-gradient(circle at top, #1e293b, #020617);
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .spin-slow {
+            animation: spin 12s linear infinite;
+        }
+
+        .shake:hover {
+            animation: shake .35s infinite;
+        }
+
+        @keyframes shake {
+            0% {transform: rotate(0deg);}
+            25% {transform: rotate(-8deg);}
+            50% {transform: rotate(8deg);}
+            75% {transform: rotate(-8deg);}
+            100% {transform: rotate(0deg);}
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: .7;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            50% {
+                opacity: .2;
+                transform: scale(.5);
+            }
+        }
+
+        .astronaut {
+            animation: drift 12s linear infinite;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translateX(-150px) rotate(-20deg);
+            }
+            50% {
+                transform: translateX(calc(100vw - 50px)) rotate(20deg);
+            }
+            100% {
+                transform: translateX(-150px) rotate(-20deg);
+            }
+        }
+    </style>
+</head>
+<body class="text-white flex items-center justify-center h-screen relative">
+
+    <!-- Estrelas -->
+    <div id="stars"></div>
+
+    <!-- Astronauta -->
+    <div class="astronaut absolute top-10 text-6xl">
+        🐟
+    </div>
+
+    <div class="relative z-10 text-center px-8">
+
+        <div class="text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 float">
+            404
+        </div>
+
+        <div class="text-7xl my-6 shake inline-block">
+           🦀
+        </div>
+
+        <h1 class="text-4xl font-bold mb-4">
+            O Carangueijo viu o peixe voar
+        </h1>
+
+        <p class="text-xl text-slate-300 max-w-xl mx-auto">
+            Nossos desenvolvedores juram que ela existia há cinco minutos...
+            mas um estagiário apertou <span class="text-red-400 font-bold">CTRL + ALT + "O QUE ISSO FAZ?"</span>.
+        </p>
+
+        <div class="mt-8 space-y-2 text-slate-400">
+            <p>🔍 Procurando a página...</p>
+            <div class="w-72 h-4 mx-auto bg-slate-700 rounded-full overflow-hidden">
+                <div id="loading"
+                     class="h-full bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 transition-all duration-500"
+                     style="width:0%">
+                </div>
+            </div>
+
+            <p id="status" class="font-mono mt-3 text-cyan-300">
+                Inicializando busca...
+            </p>
+        </div>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+
+            <button onclick="window.location.href='/'"
+                class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 transition font-bold shadow-xl">
+                🏠 Sai daqui
+            </button>
+
+            <button onclick="randomJoke()"
+                class="px-6 py-3 rounded-xl bg-pink-500 hover:bg-pink-400 transition font-bold shadow-xl">
+                😂 Outra desculpa
+            </button>
+
+        </div>
+
+        <p id="joke" class="mt-8 text-yellow-300 italic text-lg"></p>
+
+    </div>
+
+<script>
+const stars = document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.width=(Math.random()*3+1)+"px";
+    s.style.height=s.style.width;
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDelay=Math.random()*3+"s";
+    stars.appendChild(s);
+}
+
+const loading=document.getElementById("loading");
+const status=document.getElementById("status");
+
+const msgs=[
+"Consultando o oráculo...",
+"Perguntando ao estagiário...",
+"Reiniciando o servidor com um tapa...",
+"Verificando atrás do sofá...",
+"Procurando na pasta 'versão_final_agora_vai.zip'...",
+"Invocando o programador...",
+"Encontrando café...",
+"Quase lá..."
+];
+
+let i=0;
+let p=0;
+
+const timer=setInterval(()=>{
+    p+=12;
+
+    if(p>100){
+        clearInterval(timer);
+        loading.style.width="100%";
+        status.innerHTML="❌ Resultado: nem o Google conseguiu encontrar.";
+        return;
+    }
+
+    loading.style.width=p+"%";
+    status.innerHTML=msgs[i%msgs.length];
+    i++;
+
+},700);
+
+const jokes=[
+"A página saiu para comprar pão e nunca mais voltou.",
+"O servidor viu uma aranha e correu.",
+"Erro 404: a página pediu férias.",
+"Achamos um pato usando esta URL.",
+"A página foi promovida para produção... sem querer.",
+"O HTML decidiu virar poeta.",
+"Os bits entraram em greve.",
+"O JavaScript disse: 'não hoje'.",
+"Essa página existe... em outro universo.",
+"Talvez ela esteja escondida no cache do vizinho."
+];
+
+function randomJoke(){
+    document.getElementById("joke").innerHTML=
+    jokes[Math.floor(Math.random()*jokes.length)];
+}
+</script>
+
+</body>
+</html>
